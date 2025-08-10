@@ -1,3 +1,4 @@
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -73,12 +74,12 @@ files.download('/content/proyeksi_suhu_udara_2014_2035.csv')
 # Output berupa Grafik Proyeksi
 # Plot
 plt.figure(figsize=(13,6))
-plt.plot(tahun_total, sby_total, label='Suhu SBY (2014–2035)', marker='o', color='blue')
-plt.plot(tahun_total, sda_total, label='Suhu SDA (2014–2035)', marker='o', color='orange')
-plt.plot(tahun_hist, suhu_sby_real, label='Suhu Real SBY', linestyle='--', color='gray')
-plt.plot(tahun_hist, suhu_sda_real, label='Suhu Real SDA', linestyle='--', color='gold')
+plt.plot(tahun_total, sby_total, label='Suhu Udara SBY (Prediksi)', linestyle='--', color='blue')
+plt.plot(tahun_total, sda_total, label='Suhu Udara SDA (Prediksi)', linestyle='--', color='orange')
+plt.plot(tahun_hist, suhu_sby_real, label='Suhu Udara SBY (Historis)', marker='o', color='blue')
+plt.plot(tahun_hist, suhu_sda_real, label='Suhu Udara SDA (Historis)', marker='o', color='orange')
 
-plt.title('Proyeksi Suhu Udara Surabaya & Sidoarjo (2014–2035)', fontsize=14)
+plt.title('Grafik Ekstrapolasi Suhu Udara Surabaya & Sidoarjo (2014–2035)', fontsize=14)
 plt.xlabel('Tahun')
 plt.ylabel('Suhu Udara (°C)')
 plt.grid(True)
