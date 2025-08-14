@@ -1,0 +1,72 @@
+!pip install earthengine-api geemap pandas
+
+# Import library
+import ee
+import geemap
+import pandas as pd
+
+# Autentikasi Earth Engine (akan muncul link login)
+ee.Authenticate()
+# Initialize Earth Engine with your Google Cloud Project ID
+ee.Initialize(project='ee-imeliahasana04')
+
+# Contoh data lokasi
+data = {
+    'id': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    'nama': ['Surabaya1', 'Surabaya2', 'Surabaya3', 'Surabaya4', 'Surabaya5', 'Surabaya6', 'Surabaya7', 'Surabaya8', 'Surabaya9', 'Surabaya10', 'Surabaya11', 'Surabaya12', 'Surabaya13', 'Surabaya14', 'Surabaya15', 'Surabaya16', 'Surabaya17', 'Surabaya18', 'Surabaya19', 'Surabaya20'],
+    'latitude': [-7.20574, -7.20626, -7.21137, -7.21103, -7.21027, -7.21248, -7.21027, -7.20226, -7.20592, -7.20652, -7.20383, -7.20715, -7.20668, -7.20798, -7.20810, -7.20647, -7.20415, -7.20402, -7.20472, -7.20534],
+    'longitude': [112.73544, 112.73534, 112.73461, 112.73229, 112.73487, 112.73418, 112.73315, 112.73564, 112.73478, 112.73332, 112.73498, 112.73461, 112.73530, 112.73592, 112.73486, 112.73517, 112.73412, 112.73581, 112.73601, 112.73609]
+}
+df = pd.DataFrame(data)
+
+def df_to_fc(df):
+    features = []
+    for _, row in df.iterrows():
+        geom = ee.Geometry.Point([row['longitude'], row['latitude']])
+        feat = ee.Feature(geom, {
+            'id': row['id'],
+            'nama': row['nama']
+        })
+        features.append(feat)
+    return ee.FeatureCollection(features)
+
+fc = df_to_fc(df)
+
+Map = geemap.Map(center=[-7.2, 112.72], zoom=14)
+Map.addLayer(fc, {"color": "red"}, "Titik dari Python")
+Map
+
+# Ganti assetId dengan path akunmu
+task = ee.batch.Export.table.toAsset(
+    collection=fc,
+    description='ExportTitikSBY',
+    assetId='users/imelia/titiklokasisby'
+)
+task.start()
+
+df = pd.DataFrame(data)
+
+def df_to_fc(df):
+    features = []
+    for _, row in df.iterrows():
+        geom = ee.Geometry.Point([row['longitude'], row['latitude']])
+        feat = ee.Feature(geom, {
+            'id': row['id'],
+            'nama': row['nama']
+        })
+        features.append(feat)
+    return ee.FeatureCollection(features)
+
+fc = df_to_fc(df)
+
+Map = geemap.Map(center=[-7.2, 112.72], zoom=14)
+Map.addLayer(fc, {"color": "red"}, "Titik dari Python")
+Map
+
+# Ganti assetId dengan path akunmu
+task = ee.batch.Export.table.toAsset(
+    collection=fc,
+    description='ExportTitikSBY20',
+    assetId='users/imelia/titiklokasisby20'
+)
+task.start()
